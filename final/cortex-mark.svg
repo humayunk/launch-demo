@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Cortex Neural Asterisk — 8 tapered rays from center -->
+  <defs>
+    <!-- Single ray: thin triangle pointing up, apex 170px from center -->
+    <polygon id="ray" points="256,86 244,262 268,262" fill="#D4A843"/>
+  </defs>
+  <g>
+    <use href="#ray" transform="rotate(0, 256, 256)"/>
+    <use href="#ray" transform="rotate(45, 256, 256)"/>
+    <use href="#ray" transform="rotate(90, 256, 256)"/>
+    <use href="#ray" transform="rotate(135, 256, 256)"/>
+    <use href="#ray" transform="rotate(180, 256, 256)"/>
+    <use href="#ray" transform="rotate(225, 256, 256)"/>
+    <use href="#ray" transform="rotate(270, 256, 256)"/>
+    <use href="#ray" transform="rotate(315, 256, 256)"/>
+  </g>
+</svg>

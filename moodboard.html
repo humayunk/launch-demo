@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cortex Brand Exploration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+    }
+
+    /* --- Section spacing --- */
+    section {
+      margin-bottom: 120px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
+    /* --- Divider --- */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: #444;
+      margin-bottom: 48px;
+    }
+
+    /* --- Typography --- */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 400;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .intro-text {
+      font-size: 20px;
+      font-weight: 300;
+      color: #aaa;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .muted { color: #888; }
+    .small { font-size: 13px; }
+
+    /* --- Section 2: Adjectives --- */
+    .adjectives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      margin-top: 48px;
+    }
+
+    .adjective {
+      border-left: 2px solid #333;
+      padding-left: 24px;
+    }
+
+    .adjective-word {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .adjective-desc {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* --- Section 3: Palette Directions --- */
+    .direction {
+      margin-bottom: 80px;
+      padding: 48px;
+      border-radius: 16px;
+      background: #222;
+      border: 1px solid #2a2a2a;
+    }
+
+    .direction-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .direction-letter {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #555;
+      text-transform: uppercase;
+    }
+
+    .direction-name {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: #fff;
+    }
+
+    .direction-desc {
+      font-size: 15px;
+      color: #999;
+      margin-bottom: 32px;
+      max-width: 600px;
+    }
+
+    .swatches {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .swatch {
+      text-align: center;
+    }
+
+    .swatch-color {
+      width: 110px;
+      height: 110px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .swatch-hex {
+      font-size: 13px;
+      font-weight: 500;
+      color: #ccc;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .swatch-label {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .vibe {
+      font-size: 15px;
+      font-style: italic;
+      color: #aaa;
+      padding: 16px 0;
+      border-top: 1px solid #333;
+      margin-top: 8px;
+    }
+
+    /* --- Mini Card Mockups --- */
+    .mockup-area {
+      margin-top: 32px;
+      padding: 32px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .mockup-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .mini-card {
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .mini-card-illustration {
+      height: 120px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .mini-card-body {
+      padding: 12px 14px 14px;
+    }
+
+    .mini-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .mini-card-meta {
+      font-size: 11px;
+      opacity: 0.5;
+    }
+
+    /* --- Direction A mockup --- */
+    .mockup-a { background: #FAF7F2; }
+    .mockup-a .mockup-label { color: #1C2333; }
+    .mockup-a .mini-card { background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+    .mockup-a .mini-card-title { color: #2C2C2C; font-family: 'Fraunces', serif; }
+    .mockup-a .mini-card-meta { color: #2C2C2C; }
+    .mockup-a .illus-1 { background: linear-gradient(135deg, #D4A843, #e8c96a); }
+    .mockup-a .illus-2 { background: linear-gradient(135deg, #1C2333, #2d3a52); }
+    .mockup-a .illus-3 { background: linear-gradient(135deg, #8B6914, #D4A843); }
+
+    /* --- Direction B mockup --- */
+    .mockup-b { background: #111116; }
+    .mockup-b .mockup-label { color: #E0E0E0; }
+    .mockup-b .mini-card { background: #1a1a22; border: 1px solid #2a2a35; }
+    .mockup-b .mini-card-title { color: #E0E0E0; font-family: 'Inter', sans-serif; font-weight: 500; }
+    .mockup-b .mini-card-meta { color: #E0E0E0; }
+    .mockup-b .illus-1 { background: linear-gradient(135deg, #5B5FC7, #7B7FE7); }
+    .mockup-b .illus-2 { background: linear-gradient(135deg, #3B3F97, #5B5FC7); }
+    .mockup-b .illus-3 { background: linear-gradient(135deg, #5B5FC7, #9B9FFF); }
+
+    /* --- Direction C mockup --- */
+    .mockup-c { background: #F5F0EA; }
+    .mockup-c .mockup-label { color: #2A2520; }
+    .mockup-c .mini-card { background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+    .mockup-c .mini-card-title { color: #3D2B1F; font-family: 'Newsreader', serif; font-weight: 500; }
+    .mockup-c .mini-card-meta { color: #3D2B1F; }
+    .mockup-c .illus-1 { background: linear-gradient(135deg, #C4873A, #E4A75A); }
+    .mockup-c .illus-2 { background: linear-gradient(135deg, #2A2520, #4A4540); }
+    .mockup-c .illus-3 { background: linear-gradient(135deg, #8A5A1A, #C4873A); }
+
+    /* --- Section 4: Reference Brands --- */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .ref-row-label {
+      grid-column: 1 / -1;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      margin-top: 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .ref-row-label:first-child {
+      margin-top: 0;
+    }
+
+    .ref-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #222;
+      border: 1px solid #2a2a2a;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .ref-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .ref-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      background: #333;
+    }
+
+    .ref-card-caption {
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    .ref-card-caption strong {
+      color: #ddd;
+    }
+
+    /* --- Section 5: Generated Concepts --- */
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .concept-slot {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .concept-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .concept-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 400;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .concept-caption {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    /* --- Section 6: Typography --- */
+    .type-pairing {
+      margin-bottom: 56px;
+      padding: 40px;
+      border-radius: 16px;
+      background: #222;
+      border: 1px solid #2a2a2a;
+    }
+
+    .type-pairing:last-child {
+      margin-bottom: 0;
+    }
+
+    .type-pairing-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+    .type-heading {
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .type-body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #aaa;
+      max-width: 640px;
+    }
+
+    .type-fonts {
+      font-size: 12px;
+      color: #555;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #2a2a2a;
+    }
+
+    /* --- Section 7: Positioning --- */
+    .taglines {
+      margin: 40px 0 56px;
+    }
+
+    .tagline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 400;
+      color: #fff;
+      padding: 16px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .tagline:first-child {
+      border-top: 1px solid #2a2a2a;
+    }
+
+    .tagline .tagline-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      margin-right: 16px;
+      letter-spacing: 1px;
+    }
+
+    .personas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin: 48px 0;
+    }
+
+    .persona {
+      padding: 28px;
+      border-radius: 12px;
+      background: #222;
+      border: 1px solid #2a2a2a;
+    }
+
+    .persona-name {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .persona-desc {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* Quadrant */
+    .quadrant-container {
+      margin-top: 48px;
+    }
+
+    .quadrant {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1;
+      margin: 24px auto 0;
+      border: 1px solid #333;
+      border-radius: 12px;
+      background: #1e1e1e;
+    }
+
+    .quadrant-axis-x, .quadrant-axis-y {
+      position: absolute;
+      background: #333;
+    }
+
+    .quadrant-axis-x {
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+    }
+
+    .quadrant-axis-y {
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+    }
+
+    .quadrant-label {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .q-label-top { top: 16px; left: 50%; transform: translateX(-50%); }
+    .q-label-bottom { bottom: 16px; left: 50%; transform: translateX(-50%); }
+    .q-label-left { left: 16px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+    .q-label-right { right: 16px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+    .q-dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .q-dot-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+    }
+
+    .q-dot-label {
+      font-size: 11px;
+      color: #aaa;
+      white-space: nowrap;
+    }
+
+    .q-dot-cortex .q-dot-circle {
+      width: 16px;
+      height: 16px;
+      background: #D4A843;
+      box-shadow: 0 0 12px rgba(212, 168, 67, 0.4);
+    }
+
+    .q-dot-cortex .q-dot-label {
+      color: #D4A843;
+      font-weight: 600;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .page { padding: 48px 20px 80px; }
+      section { margin-bottom: 80px; }
+      .direction { padding: 28px; }
+      .type-pairing { padding: 24px; }
+      .swatches { gap: 12px; }
+      .swatch-color { width: 80px; height: 80px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .concepts-grid { grid-template-columns: 1fr; }
+      .ref-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- SECTION 1: Hero -->
+    <section>
+      <p class="section-label">Brand Exploration</p>
+      <h1>Cortex</h1>
+      <p class="intro-text">Exploring the visual identity for Cortex &mdash; a knowledge library for curious people.</p>
+      <p class="intro-text muted" style="margin-top: 12px; font-size: 15px;">
+        A visual knowledge library with AI-generated illustrated concept cards and spaced repetition learning.
+      </p>
+    </section>
+
+    <!-- SECTION 2: Brand Personality -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Brand Personality</p>
+      <h2>Five words that define the brand</h2>
+      <div class="adjectives-grid">
+        <div class="adjective">
+          <div class="adjective-word">Curious</div>
+          <p class="adjective-desc">Not passive consumption. Active exploration. The product invites you to go deeper, to ask "what else?"</p>
+        </div>
+        <div class="adjective">
+          <div class="adjective-word">Visual</div>
+          <p class="adjective-desc">Knowledge made tangible through illustration. Every concept gets a face. Memory anchored in imagery.</p>
+        </div>
+        <div class="adjective">
+          <div class="adjective-word">Warm</div>
+          <p class="adjective-desc">Not clinical, not cold. Learning should feel like a good bookshop, not a lecture hall.</p>
+        </div>
+        <div class="adjective">
+          <div class="adjective-word">Considered</div>
+          <p class="adjective-desc">Every detail is intentional. The restraint of a well-edited magazine. Quiet confidence in craft.</p>
+        </div>
+        <div class="adjective">
+          <div class="adjective-word">Confident</div>
+          <p class="adjective-desc">It knows what it is. No trend-chasing. The design speaks with authority without raising its voice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Palette Directions -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Color Directions</p>
+      <h2>Three palette explorations</h2>
+
+      <!-- Direction A -->
+      <div class="direction" style="margin-top: 48px;">
+        <div class="direction-header">
+          <span class="direction-letter">Direction A</span>
+          <span class="direction-name">"The Library"</span>
+        </div>
+        <p class="direction-desc">Intellectual warmth meets editorial restraint. Gold accents on cream. The feeling of a well-lit reading room.</p>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-color" style="background: #1C2333;"></div>
+            <div class="swatch-hex">#1C2333</div>
+            <div class="swatch-label">Primary</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #FAF7F2; border-color: rgba(0,0,0,0.1);"></div>
+            <div class="swatch-hex">#FAF7F2</div>
+            <div class="swatch-label">Surface</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #D4A843;"></div>
+            <div class="swatch-hex">#D4A843</div>
+            <div class="swatch-label">Accent</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #2C2C2C;"></div>
+            <div class="swatch-hex">#2C2C2C</div>
+            <div class="swatch-label">Text</div>
+          </div>
+        </div>
+        <div class="vibe">"Readwise meets Literal.club meets Monocle. Intellectual warmth."</div>
+
+        <div class="mockup-area mockup-a">
+          <div class="mockup-label">Card Preview</div>
+          <div class="card-grid">
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-1"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Neuroplasticity</div>
+                <div class="mini-card-meta">Neuroscience &middot; 12 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-2"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Stoic Ethics</div>
+                <div class="mini-card-meta">Philosophy &middot; 8 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-3"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Supply & Demand</div>
+                <div class="mini-card-meta">Economics &middot; 6 cards</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direction B -->
+      <div class="direction">
+        <div class="direction-header">
+          <span class="direction-letter">Direction B</span>
+          <span class="direction-name">"The Lab"</span>
+        </div>
+        <p class="direction-desc">Precision instrument energy. Dark-mode-first. The tool disappears; the content glows.</p>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-color" style="background: #111116;"></div>
+            <div class="swatch-hex">#111116</div>
+            <div class="swatch-label">Primary</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #F5F5F5; border-color: rgba(0,0,0,0.1);"></div>
+            <div class="swatch-hex">#F5F5F5</div>
+            <div class="swatch-label">Surface</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #5B5FC7;"></div>
+            <div class="swatch-hex">#5B5FC7</div>
+            <div class="swatch-label">Accent</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #E0E0E0;"></div>
+            <div class="swatch-hex">#E0E0E0</div>
+            <div class="swatch-label">Text</div>
+          </div>
+        </div>
+        <div class="vibe">"Linear meets Brilliant. Precision tool. Dark-mode-first."</div>
+
+        <div class="mockup-area mockup-b">
+          <div class="mockup-label">Card Preview</div>
+          <div class="card-grid">
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-1"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Neuroplasticity</div>
+                <div class="mini-card-meta">Neuroscience &middot; 12 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-2"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Stoic Ethics</div>
+                <div class="mini-card-meta">Philosophy &middot; 8 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-3"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Supply & Demand</div>
+                <div class="mini-card-meta">Economics &middot; 6 cards</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direction C -->
+      <div class="direction">
+        <div class="direction-header">
+          <span class="direction-letter">Direction C</span>
+          <span class="direction-name">"The Cabinet of Curiosities"</span>
+        </div>
+        <p class="direction-desc">Warm, tactile, museum-like. The UI is a quiet frame. The illustrated cards ARE the color and personality.</p>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-color" style="background: #2A2520;"></div>
+            <div class="swatch-hex">#2A2520</div>
+            <div class="swatch-label">Primary</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #F5F0EA; border-color: rgba(0,0,0,0.1);"></div>
+            <div class="swatch-hex">#F5F0EA</div>
+            <div class="swatch-label">Surface</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #C4873A;"></div>
+            <div class="swatch-hex">#C4873A</div>
+            <div class="swatch-label">Accent</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #3D2B1F;"></div>
+            <div class="swatch-hex">#3D2B1F</div>
+            <div class="swatch-label">Text</div>
+          </div>
+        </div>
+        <div class="vibe">"Aesop meets Penguin. The UI is a warm frame. The cards ARE the color."</div>
+
+        <div class="mockup-area mockup-c">
+          <div class="mockup-label">Card Preview</div>
+          <div class="card-grid">
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-1"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Neuroplasticity</div>
+                <div class="mini-card-meta">Neuroscience &middot; 12 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-2"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Stoic Ethics</div>
+                <div class="mini-card-meta">Philosophy &middot; 8 cards</div>
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-illustration illus-3"></div>
+              <div class="mini-card-body">
+                <div class="mini-card-title">Supply & Demand</div>
+                <div class="mini-card-meta">Economics &middot; 6 cards</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Reference Brands -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Reference Brands</p>
+      <h2>Visual references and inspiration</h2>
+
+      <div class="ref-grid">
+        <div class="ref-row-label">Knowledge / Learning</div>
+
+        <div class="ref-card">
+          <img src="https://readwise-assets.s3.amazonaws.com/static/images/landing/landing_hero.12a1e031294d.png" alt="Readwise" loading="lazy">
+          <div class="ref-card-caption"><strong>Readwise</strong> &mdash; Gold warmth, daily review ritual</div>
+        </div>
+        <div class="ref-card">
+          <img src="https://brilliant.org/images/homepage/learn-by-doing-refresh.png" alt="Brilliant" loading="lazy">
+          <div class="ref-card-caption"><strong>Brilliant</strong> &mdash; Dark canvas, vivid illustrated concepts</div>
+        </div>
+        <div class="ref-card">
+          <img src="https://wp.literal.club/wp-content/themes/literal/assets/home/virtual-bookshelf.png" alt="Literal" loading="lazy">
+          <div class="ref-card-caption"><strong>Literal</strong> &mdash; Dark + cream, curated library</div>
+        </div>
+
+        <div class="ref-row-label">Premium Tools</div>
+
+        <div class="ref-card">
+          <img src="https://bear.app/images/home/hero_mac.jpg" alt="Bear" loading="lazy">
+          <div class="ref-card-caption"><strong>Bear</strong> &mdash; Single accent color, minimal chrome</div>
+        </div>
+        <div class="ref-card">
+          <img src="https://static.culturedcode.com/things/2024-01-20/images/meettheallnewthings2-io75.jpg" alt="Things 3" loading="lazy">
+          <div class="ref-card-caption"><strong>Things 3</strong> &mdash; Quiet confidence, whitespace as design</div>
+        </div>
+        <div class="ref-card">
+          <img src="https://www.craft.do/craft_og.png" alt="Craft" loading="lazy">
+          <div class="ref-card-caption"><strong>Craft</strong> &mdash; Card grid with rich covers</div>
+        </div>
+
+        <div class="ref-row-label">Cultural / Knowledge Brands</div>
+
+        <div class="ref-card">
+          <img src="https://wp.penguin.co.uk/wp-content/uploads/2022/05/Evergreen-90th-logo_RGB.png" alt="Penguin" loading="lazy">
+          <div class="ref-card-caption"><strong>Penguin</strong> &mdash; Color-coded knowledge categories</div>
+        </div>
+        <div class="ref-card">
+          <img src="https://monocle.com/wp-content/uploads/2025/03/new-magazines-illo.png?fit=1063%2C591" alt="Monocle" loading="lazy">
+          <div class="ref-card-caption"><strong>Monocle</strong> &mdash; Black + gold, editorial restraint</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Generated Concepts -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Generated Concepts</p>
+      <h2>AI-generated direction explorations</h2>
+      <p class="muted" style="margin-bottom: 8px;">Visual mockups for each palette direction. Colored fallbacks shown if images haven't been generated yet.</p>
+
+      <div class="concepts-grid">
+        <div>
+          <div class="concept-slot">
+            <div class="concept-fallback" style="background: linear-gradient(135deg, #1C2333, #D4A843); color: #FAF7F2;">
+              The Library
+            </div>
+            <img src="direction-a-library.png" alt="Direction A: The Library"
+              onerror="this.style.display='none'"
+              style="position: absolute; inset: 0;">
+          </div>
+          <div class="concept-caption">Direction A: The Library</div>
+        </div>
+        <div>
+          <div class="concept-slot">
+            <div class="concept-fallback" style="background: linear-gradient(135deg, #111116, #5B5FC7); color: #E0E0E0;">
+              The Lab
+            </div>
+            <img src="direction-b-lab.png" alt="Direction B: The Lab"
+              onerror="this.style.display='none'"
+              style="position: absolute; inset: 0;">
+          </div>
+          <div class="concept-caption">Direction B: The Lab</div>
+        </div>
+        <div>
+          <div class="concept-slot">
+            <div class="concept-fallback" style="background: linear-gradient(135deg, #2A2520, #C4873A); color: #F5F0EA;">
+              The Cabinet
+            </div>
+            <img src="direction-c-cabinet.png" alt="Direction C: The Cabinet of Curiosities"
+              onerror="this.style.display='none'"
+              style="position: absolute; inset: 0;">
+          </div>
+          <div class="concept-caption">Direction C: The Cabinet of Curiosities</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Typography -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Typography</p>
+      <h2>Font pairing explorations</h2>
+
+      <div style="margin-top: 48px;">
+        <div class="type-pairing">
+          <div class="type-pairing-label">Pairing 1</div>
+          <div class="type-heading" style="font-family: 'Fraunces', serif; font-weight: 400;">Learn anything. Remember everything.</div>
+          <div class="type-body" style="font-family: 'Inter', sans-serif;">Cortex is a visual knowledge library that helps you organize, understand, and actually remember what you learn.</div>
+          <div class="type-fonts">Fraunces (heading) + Inter (body)</div>
+        </div>
+
+        <div class="type-pairing">
+          <div class="type-pairing-label">Pairing 2</div>
+          <div class="type-heading" style="font-family: 'Newsreader', serif; font-weight: 400;">Learn anything. Remember everything.</div>
+          <div class="type-body" style="font-family: 'DM Sans', sans-serif;">Cortex is a visual knowledge library that helps you organize, understand, and actually remember what you learn.</div>
+          <div class="type-fonts">Newsreader (heading) + DM Sans (body) &mdash; substituting for Satoshi</div>
+        </div>
+
+        <div class="type-pairing">
+          <div class="type-pairing-label">Pairing 3</div>
+          <div class="type-heading" style="font-family: 'Source Serif 4', serif; font-weight: 400;">Learn anything. Remember everything.</div>
+          <div class="type-body" style="font-family: 'Inter', sans-serif;">Cortex is a visual knowledge library that helps you organize, understand, and actually remember what you learn.</div>
+          <div class="type-fonts">Source Serif 4 (heading) + Inter (body)</div>
+        </div>
+
+        <div class="type-pairing">
+          <div class="type-pairing-label">Pairing 4 &mdash; Current</div>
+          <div class="type-heading" style="font-family: 'Playfair Display', serif; font-weight: 400;">Learn anything. Remember everything.</div>
+          <div class="type-body" style="font-family: 'Inter', sans-serif;">Cortex is a visual knowledge library that helps you organize, understand, and actually remember what you learn.</div>
+          <div class="type-fonts">Playfair Display (heading) + Inter (body) &mdash; current pairing</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Positioning -->
+    <section>
+      <div class="divider"></div>
+      <p class="section-label">Positioning</p>
+      <h2>How Cortex sits in the landscape</h2>
+
+      <div class="taglines">
+        <div class="tagline"><span class="tagline-num">01</span>Learn anything. Remember everything.</div>
+        <div class="tagline"><span class="tagline-num">02</span>Your visual knowledge library.</div>
+        <div class="tagline"><span class="tagline-num">03</span>See what you know.</div>
+        <div class="tagline"><span class="tagline-num">04</span>Knowledge, illustrated.</div>
+        <div class="tagline"><span class="tagline-num">05</span>A library for curious people.</div>
+      </div>
+
+      <h3 style="margin-bottom: 24px;">Target Personas</h3>
+      <div class="personas">
+        <div class="persona">
+          <div class="persona-name">The Lifelong Learner</div>
+          <p class="persona-desc">Takes online courses, reads nonfiction, listens to podcasts. Has a notes app full of highlights they never revisit. Wants to actually retain what they learn, not just consume it.</p>
+        </div>
+        <div class="persona">
+          <div class="persona-name">The Visual Thinker</div>
+          <p class="persona-desc">Thinks in pictures, diagrams, spatial relationships. Text-heavy flashcard apps feel dead to them. Needs concepts anchored in imagery to make knowledge stick.</p>
+        </div>
+        <div class="persona">
+          <div class="persona-name">The Taste-Driven Autodidact</div>
+          <p class="persona-desc">Cares about tools as much as outcomes. Uses Bear, Notion, or Obsidian. Wants their knowledge tool to feel as considered as the rest of their stack.</p>
+        </div>
+      </div>
+
+      <div class="quadrant-container">
+        <h3>Competitive Positioning</h3>
+        <p class="muted small" style="margin-top: 4px;">Where Cortex aims to sit: beautiful design + actual retention.</p>
+        <div class="quadrant">
+          <div class="quadrant-axis-x"></div>
+          <div class="quadrant-axis-y"></div>
+          <div class="quadrant-label q-label-top">Beautiful</div>
+          <div class="quadrant-label q-label-bottom">Ugly</div>
+          <div class="quadrant-label q-label-left">Capture</div>
+          <div class="quadrant-label q-label-right">Retention</div>
+
+          <!-- Competitors -->
+          <div class="q-dot" style="top: 30%; left: 25%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Readwise</div>
+          </div>
+          <div class="q-dot" style="top: 35%; left: 72%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Brilliant</div>
+          </div>
+          <div class="q-dot" style="top: 65%; left: 78%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Anki</div>
+          </div>
+          <div class="q-dot" style="top: 25%; left: 35%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Notion</div>
+          </div>
+          <div class="q-dot" style="top: 55%; left: 60%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Quizlet</div>
+          </div>
+          <div class="q-dot" style="top: 40%; left: 18%;">
+            <div class="q-dot-circle" style="background: #666;"></div>
+            <div class="q-dot-label">Obsidian</div>
+          </div>
+
+          <!-- Cortex -->
+          <div class="q-dot q-dot-cortex" style="top: 20%; left: 72%;">
+            <div class="q-dot-circle"></div>
+            <div class="q-dot-label">Cortex</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cortex Wordmark Pairings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=Instrument+Serif&family=Young+Serif&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=DM+Serif+Display&family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #e8e8e8;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 80px 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { max-width: 1000px; margin: 0 auto; }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #888;
+      font-weight: 300;
+      margin-bottom: 80px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    /* Sidebar simulation */
+    .pairing {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      margin-bottom: 24px;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .pairing:hover {
+      border-color: rgba(212, 168, 67, 0.3);
+    }
+    .sidebar-sim {
+      background: #161616;
+      padding: 24px 20px;
+      border-right: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .sidebar-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .sidebar-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidebar-nav-item {
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: #888;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-nav-item.active {
+      color: #D4A843;
+      background: rgba(212, 168, 67, 0.08);
+    }
+
+    .pairing-info {
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #1a1a1a;
+    }
+    .font-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #D4A843;
+      margin-bottom: 4px;
+    }
+    .font-desc {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+    }
+    .font-note {
+      font-size: 11px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    /* Large display */
+    .display-section { margin-top: 80px; }
+    .display-row {
+      padding: 48px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .display-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .display-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .display-label {
+      font-size: 11px;
+      color: #555;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-left: auto;
+    }
+
+    /* Winner section */
+    .winner {
+      margin-top: 80px;
+      padding: 48px;
+      background: #1a1a1a;
+      border: 1px solid rgba(212, 168, 67, 0.2);
+      border-radius: 16px;
+      text-align: center;
+    }
+    .winner-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #D4A843;
+      margin-bottom: 32px;
+    }
+    .winner-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .winner-note {
+      font-size: 14px;
+      color: #888;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Wordmark Pairings</h1>
+    <p class="subtitle">Neural asterisk icon + serif wordmark candidates. All from Google Fonts.</p>
+
+    <p class="section-label">Sidebar Context (20px)</p>
+
+    <!-- 1. Instrument Serif -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'Instrument Serif',serif;font-size:20px;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">Instrument Serif</div>
+        <div class="font-desc">Clean, modern, premium. Design-studio energy. Sharp without being fragile.</div>
+        <div class="font-note">Recommended #1 — best balance of distinction and legibility at small sizes</div>
+      </div>
+    </div>
+
+    <!-- 2. Young Serif -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'Young Serif',serif;font-size:20px;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">Young Serif</div>
+        <div class="font-desc">Contemporary with character. Warm, confident, slightly unconventional.</div>
+        <div class="font-note">Recommended #2 — most personality while staying readable</div>
+      </div>
+    </div>
+
+    <!-- 3. Newsreader -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'Newsreader',serif;font-size:20px;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">Newsreader</div>
+        <div class="font-desc">Editorial authority. Sharp, journalistic. Feels like a quality publication masthead.</div>
+        <div class="font-note">Recommended #3 — strongest editorial DNA, has optical sizes for small text</div>
+      </div>
+    </div>
+
+    <!-- 4. DM Serif Display -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'DM Serif Display',serif;font-size:20px;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">DM Serif Display</div>
+        <div class="font-desc">Modern, compact serif. Designed for DeepMind. Confident and restrained.</div>
+        <div class="font-note">Works better at 24px+ — at 20px it's on the edge</div>
+      </div>
+    </div>
+
+    <!-- 5. Cormorant Garamond Medium -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">Cormorant Garamond (Medium)</div>
+        <div class="font-desc">Aristocratic, literary, high-contrast. Pure luxury. Needs heavier weight at small sizes.</div>
+        <div class="font-note">Beautiful but fragile — hairlines may vanish on some displays</div>
+      </div>
+    </div>
+
+    <!-- 6. Fraunces (current heading font for comparison) -->
+    <div class="pairing">
+      <div class="sidebar-sim">
+        <div class="sidebar-logo-row">
+          <div class="sidebar-icon"><img src="neural-asterisk.png"></div>
+          <span style="font-family:'Fraunces',serif;font-size:20px;color:#fff;">cortex</span>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-nav-item active">Everything</div>
+          <div class="sidebar-nav-item">Cortexes</div>
+          <div class="sidebar-nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="pairing-info">
+        <div class="font-name">Fraunces (current heading font)</div>
+        <div class="font-desc">Warm, quirky variable serif. Already used for headings — using it for the wordmark too means less distinction between logo and content.</div>
+        <div class="font-note">For comparison — works but doesn't differentiate the wordmark from headings</div>
+      </div>
+    </div>
+
+    <!-- Large display versions -->
+    <p class="section-label" style="margin-top:80px;">Display Size (40px)</p>
+    <p style="font-size:14px;color:#888;margin-bottom:24px;">How each reads at marketing / landing page size.</p>
+
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Instrument Serif',serif;font-size:40px;color:#fff;">cortex</span>
+      <span class="display-label">Instrument Serif</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Young Serif',serif;font-size:40px;color:#fff;">cortex</span>
+      <span class="display-label">Young Serif</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Newsreader',serif;font-size:40px;color:#fff;">cortex</span>
+      <span class="display-label">Newsreader</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'DM Serif Display',serif;font-size:40px;color:#fff;">cortex</span>
+      <span class="display-label">DM Serif Display</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;color:#fff;">cortex</span>
+      <span class="display-label">Cormorant Garamond</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Fraunces',serif;font-size:40px;color:#fff;">cortex</span>
+      <span class="display-label">Fraunces (current)</span>
+    </div>
+
+    <!-- Gold on dark versions -->
+    <p class="section-label" style="margin-top:80px;">Gold Wordmark (Landing Page / Marketing)</p>
+    <p style="font-size:14px;color:#888;margin-bottom:24px;">The wordmark in gold for use on dark marketing pages.</p>
+
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Instrument Serif',serif;font-size:48px;color:#D4A843;">cortex</span>
+      <span class="display-label">Instrument Serif</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Young Serif',serif;font-size:48px;color:#D4A843;">cortex</span>
+      <span class="display-label">Young Serif</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Newsreader',serif;font-size:48px;color:#D4A843;">cortex</span>
+      <span class="display-label">Newsreader</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'DM Serif Display',serif;font-size:48px;color:#D4A843;">cortex</span>
+      <span class="display-label">DM Serif Display</span>
+    </div>
+    <div class="display-row">
+      <div class="display-icon"><img src="neural-asterisk.png"></div>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;color:#D4A843;">cortex</span>
+      <span class="display-label">Cormorant Garamond</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cortex Icon Concepts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #0f0f0f;
+      color: #e8e8e8;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 80px 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #888;
+      font-weight: 300;
+      margin-bottom: 80px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 32px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+    .icon-card {
+      text-align: center;
+    }
+    .icon-frame {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .icon-frame:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 32px rgba(212, 168, 67, 0.1);
+    }
+    .icon-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .icon-name {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .icon-desc {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Size comparison */
+    .sizes-section { margin-top: 80px; }
+    .sizes-row {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      margin-bottom: 40px;
+      padding: 32px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+    }
+    .size-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #666;
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .size-previews {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .size-preview {
+      text-align: center;
+    }
+    .size-preview img {
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    .size-preview span {
+      font-size: 10px;
+      color: #555;
+    }
+
+    /* Wordmark pairing */
+    .wordmark-section { margin-top: 80px; }
+    .wordmark-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 32px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .wordmark-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .wordmark-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .wordmark-text {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      color: #fff;
+      font-weight: 400;
+    }
+    .wordmark-gold-dot {
+      width: 6px;
+      height: 6px;
+      background: #D4A843;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .sizes-row { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Icon Concepts</h1>
+    <p class="subtitle">Six directions for the Cortex app icon. Gold on dark.</p>
+
+    <p class="section-label">Concepts</p>
+    <div class="grid">
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="serif-c-clean.png" alt="Serif C Clean">
+        </div>
+        <div class="icon-name">The Serif C</div>
+        <div class="icon-desc">Bold serif letter. The Notion playbook — radical simplicity, maximum confidence.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="serif-c-dot.png" alt="Serif C with Dot">
+        </div>
+        <div class="icon-name">Serif C + Node</div>
+        <div class="icon-desc">The C with a knowledge node nested in the aperture. Connects to the "gold dot" brand element.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="neural-asterisk.png" alt="Neural Asterisk">
+        </div>
+        <div class="icon-name">Neural Asterisk</div>
+        <div class="icon-desc">Synapse firing. Radiating lines suggest a knowledge node activating. Abstract but evocative.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="neural-asterisk-dot.png" alt="Neural Asterisk with Dot">
+        </div>
+        <div class="icon-name">Neural Node</div>
+        <div class="icon-desc">Central dot with radiating connections. The atomic unit of a knowledge graph.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="gold-dot-simple.png" alt="Gold Dot">
+        </div>
+        <div class="icon-name">The Gold Dot</div>
+        <div class="icon-desc">Pure confidence. A single circle. The node. The concept. The knowledge point.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="bracket-serif.png" alt="Bracket Serif">
+        </div>
+        <div class="icon-name">The Open Bracket</div>
+        <div class="icon-desc">A curly brace — the typography of containment and structure. Intellectual, typographic.</div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:80px;">Bracket Variations (No Center Bar)</p>
+    <p style="font-size:14px;color:#888;margin-bottom:32px;">Exploring the brace as a pure curve — no serifs, no horizontal bar.</p>
+    <div class="grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="bracket-open-curve.png" alt="Open Curve">
+        </div>
+        <div class="icon-name">Open Curve</div>
+        <div class="icon-desc">A single flowing S-curve. Like the spine of an open book.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="bracket-minimal-brace.png" alt="Minimal Brace">
+        </div>
+        <div class="icon-name">Minimal Brace</div>
+        <div class="icon-desc">Two S-curves meeting at a point. Calligraphic, bold.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="bracket-thin-elegant.png" alt="Thin Elegant">
+        </div>
+        <div class="icon-name">Thin Elegant</div>
+        <div class="icon-desc">Fine gold pen stroke. Delicate, sinuous, refined.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="bracket-thick-modern.png" alt="Thick Modern">
+        </div>
+        <div class="icon-name">Thick Modern</div>
+        <div class="icon-desc">Bold geometric arcs meeting at a point. Logo-mark energy.</div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:80px;">Brain + Bracket Explorations</p>
+    <p style="font-size:14px;color:#888;margin-bottom:32px;">Leaning into the double-reading: curly brace that also reads as brain hemispheres. Bracket = structure, brain = cortex.</p>
+    <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-1.png" alt="Brain Bracket 1">
+        </div>
+        <div class="icon-name">Mirrored Hemispheres</div>
+        <div class="icon-desc">Two curves meeting at points. Reads as brace AND brain halves.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-2.png" alt="Brain Bracket 2">
+        </div>
+        <div class="icon-name">Top-Down Brain</div>
+        <div class="icon-desc">Rotated brace as brain viewed from above. Two lobes, narrow center.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-3.png" alt="Brain Bracket 3">
+        </div>
+        <div class="icon-name">Facing Commas</div>
+        <div class="icon-desc">Two comma shapes facing each other. Walnut/brain silhouette.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-4.png" alt="Brain Bracket 4">
+        </div>
+        <div class="icon-name">Profile Brace</div>
+        <div class="icon-desc">Brace as brain in profile. Two arcs meeting at a left point.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-5.png" alt="Brain Bracket 5">
+        </div>
+        <div class="icon-name">Outline Brain</div>
+        <div class="icon-desc">Single continuous line forming two lobes. Stroke only, no fill.</div>
+      </div>
+      <div class="icon-card">
+        <div class="icon-frame">
+          <img src="brain-bracket-dot.png" alt="Brain Bracket with Dot">
+        </div>
+        <div class="icon-name">Brain + Node</div>
+        <div class="icon-desc">Two hemispheres with a gold dot in the center gap. Brain + brace + knowledge node.</div>
+      </div>
+    </div>
+
+    <p class="section-label">Size Test</p>
+    <p style="font-size:14px;color:#888;margin-bottom:24px;">How the top concepts hold up from app icon to favicon.</p>
+    <div class="sizes-row">
+      <div class="size-label">Serif C</div>
+      <div class="size-previews">
+        <div class="size-preview">
+          <img src="serif-c-dot.png" width="128" height="128" style="border-radius:24px;">
+          <span>128px (App Store)</span>
+        </div>
+        <div class="size-preview">
+          <img src="serif-c-dot.png" width="60" height="60" style="border-radius:14px;">
+          <span>60px (Mobile)</span>
+        </div>
+        <div class="size-preview">
+          <img src="serif-c-dot.png" width="32" height="32" style="border-radius:8px;">
+          <span>32px (Tab)</span>
+        </div>
+        <div class="size-preview">
+          <img src="serif-c-dot.png" width="16" height="16" style="border-radius:4px;">
+          <span>16px (Favicon)</span>
+        </div>
+      </div>
+    </div>
+    <div class="sizes-row">
+      <div class="size-label">Neural Asterisk</div>
+      <div class="size-previews">
+        <div class="size-preview">
+          <img src="neural-asterisk.png" width="128" height="128" style="border-radius:24px;">
+          <span>128px (App Store)</span>
+        </div>
+        <div class="size-preview">
+          <img src="neural-asterisk.png" width="60" height="60" style="border-radius:14px;">
+          <span>60px (Mobile)</span>
+        </div>
+        <div class="size-preview">
+          <img src="neural-asterisk.png" width="32" height="32" style="border-radius:8px;">
+          <span>32px (Tab)</span>
+        </div>
+        <div class="size-preview">
+          <img src="neural-asterisk.png" width="16" height="16" style="border-radius:4px;">
+          <span>16px (Favicon)</span>
+        </div>
+      </div>
+    </div>
+    <div class="sizes-row">
+      <div class="size-label">Gold Dot</div>
+      <div class="size-previews">
+        <div class="size-preview">
+          <img src="gold-dot-simple.png" width="128" height="128" style="border-radius:24px;">
+          <span>128px (App Store)</span>
+        </div>
+        <div class="size-preview">
+          <img src="gold-dot-simple.png" width="60" height="60" style="border-radius:14px;">
+          <span>60px (Mobile)</span>
+        </div>
+        <div class="size-preview">
+          <img src="gold-dot-simple.png" width="32" height="32" style="border-radius:8px;">
+          <span>32px (Tab)</span>
+        </div>
+        <div class="size-preview">
+          <img src="gold-dot-simple.png" width="16" height="16" style="border-radius:4px;">
+          <span>16px (Favicon)</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:80px;">Wordmark Pairings</p>
+    <p style="font-size:14px;color:#888;margin-bottom:24px;">How each icon sits next to the "cortex" wordmark in the sidebar.</p>
+
+    <div class="wordmark-row">
+      <div class="wordmark-icon"><img src="serif-c-dot.png"></div>
+      <span class="wordmark-text">cortex</span>
+    </div>
+    <div class="wordmark-row">
+      <div class="wordmark-icon"><img src="neural-asterisk.png"></div>
+      <span class="wordmark-text">cortex</span>
+    </div>
+    <div class="wordmark-row">
+      <div class="wordmark-icon"><img src="neural-asterisk-dot.png"></div>
+      <span class="wordmark-text">cortex</span>
+    </div>
+    <div class="wordmark-row">
+      <div class="wordmark-icon"><img src="gold-dot-simple.png"></div>
+      <span class="wordmark-text">cortex</span>
+    </div>
+    <div class="wordmark-row">
+      <div class="wordmark-icon"><img src="bracket-serif.png"></div>
+      <span class="wordmark-text">cortex</span>
+    </div>
+    <div class="wordmark-row">
+      <div class="wordmark-gold-dot"></div>
+      <span class="wordmark-text">cortex</span>
+      <span style="font-size:12px;color:#666;margin-left:auto;">current (dot only)</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cortex Demo — /launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Section label */
+    .slide-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    /* Hero slide (title) */
+    .slide-hero {
+      text-align: center;
+    }
+    .slide-hero .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 56px;
+    }
+    .slide-hero .logo svg {
+      width: 80px;
+      height: 80px;
+    }
+    .slide-hero .logo-text {
+      font-family: 'Newsreader', serif;
+      font-size: 64px;
+      color: #fff;
+      font-weight: 400;
+    }
+    .slide-hero h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(40px, 5vw, 64px);
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      max-width: 1100px;
+    }
+    .slide-hero .subtitle {
+      font-size: 20px;
+      color: #888;
+      max-width: 700px;
+    }
+    .slide-hero .author {
+      margin-top: 56px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Standard text slide */
+    .slide-text {
+      text-align: center;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .slide-text .slide-label {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .slide-text h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(36px, 4.5vw, 56px);
+      color: #fff;
+      line-height: 1.2;
+      margin: 0 auto 32px;
+      text-align: center;
+      max-width: 100%;
+    }
+    .slide-text p {
+      font-size: 22px;
+      line-height: 1.6;
+      color: #aaa;
+      margin: 0 auto 20px;
+      max-width: 800px;
+      text-align: center;
+    }
+    .slide-text .highlight {
+      color: #D4A843;
+    }
+    .slide-text .sameness-grid,
+    .slide-text .phases {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Screenshot slide (artifacts) */
+    .slide-shot {
+      padding: 40px 60px 80px;
+      align-items: stretch;
+    }
+    .slide-shot .shot-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .slide-shot .shot-title {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      color: #fff;
+    }
+    .slide-shot .shot-meta {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .shot-frame {
+      flex: 1;
+      width: 100%;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      background: #1a1a1a;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 80px rgba(212, 168, 67, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+    .shot-bar {
+      background: #161616;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #2a2a2a;
+      flex-shrink: 0;
+    }
+    .shot-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .shot-dot.red { background: #ff5f57; }
+    .shot-dot.yellow { background: #febc2e; }
+    .shot-dot.green { background: #28c840; }
+    .shot-url {
+      margin-left: 16px;
+      font-size: 11px;
+      color: #666;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .shot-link {
+      margin-left: auto;
+      font-size: 11px;
+      color: #D4A843;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .shot-link:hover { color: #E4B853; }
+    .shot-image-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      background: #0f0f0f;
+    }
+    .shot-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .shot-image-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #1a1a1a;
+    }
+
+    /* Code/spec slide */
+    .slide-spec {
+      text-align: center;
+      max-width: 1100px;
+      width: 100%;
+      padding: 40px 80px 80px;
+      margin: 0 auto;
+    }
+    .slide-spec .slide-label {
+      text-align: center;
+    }
+    .slide-spec h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 44px;
+      color: #fff;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .slide-spec .section-desc {
+      font-size: 15px;
+      color: #888;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .slide-spec pre {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #aaa;
+      text-align: left;
+      overflow: hidden;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .slide-spec pre .gold { color: #D4A843; }
+    .slide-spec pre .key { color: #fff; }
+    .slide-spec pre .comment { color: #555; }
+
+    /* Phases slide */
+    .phases {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .phase {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .phase-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .phase-name {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    /* Sameness grid */
+    .sameness-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .sameness-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sameness-skeleton-bar {
+      height: 8px;
+      background: #2a2a2a;
+      border-radius: 4px;
+    }
+    .sameness-skeleton-bar.short { width: 40%; }
+    .sameness-skeleton-bar.medium { width: 70%; }
+    .sameness-skeleton-bar.long { width: 95%; }
+    .sameness-skeleton-button {
+      margin-top: auto;
+      align-self: flex-start;
+      width: 80px;
+      height: 24px;
+      background: #2a2a2a;
+      border-radius: 6px;
+    }
+
+    /* Close slide */
+    .slide-close {
+      text-align: center;
+    }
+    .slide-close h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 56px;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .slide-close .url {
+      font-family: 'Newsreader', serif;
+      font-size: 36px;
+      color: #D4A843;
+      margin-top: 24px;
+      letter-spacing: -0.5px;
+    }
+    .slide-close .tagline {
+      font-size: 18px;
+      color: #888;
+      margin-top: 16px;
+    }
+
+    /* Big stat */
+    .slide-stat {
+      text-align: center;
+    }
+    .big-number {
+      font-family: 'Fraunces', serif;
+      font-size: 200px;
+      line-height: 1;
+      color: #D4A843;
+      margin-bottom: 24px;
+      text-shadow: 0 0 80px rgba(212, 168, 67, 0.3);
+    }
+    .stat-label {
+      font-size: 24px;
+      color: #aaa;
+      max-width: 700px;
+    }
+
+    /* Progress + nav */
+    .nav-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 20px;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid #2a2a2a;
+      border-radius: 100px;
+      z-index: 100;
+      font-size: 12px;
+      color: #888;
+    }
+    .nav-counter {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+    }
+    .nav-counter .current { color: #D4A843; }
+    .nav-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #444;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .nav-dot.active {
+      background: #D4A843;
+      width: 18px;
+      border-radius: 3px;
+    }
+    .nav-hint {
+      color: #555;
+      font-size: 11px;
+    }
+
+    /* Speaker notes */
+    .speaker-notes {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      max-width: 90vw;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid rgba(212, 168, 67, 0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.6;
+      z-index: 99;
+      display: none;
+    }
+    .speaker-notes.visible { display: block; }
+    .speaker-notes-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #D4A843;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ============== SLIDE 1: Hero ============== -->
+  <section class="slide slide-hero active" data-notes="The hook. Don't rush. Let the title land. The whole demo is reframing 'AI-generated apps look the same' as a solvable design problem.">
+    <div class="logo">
+      <svg viewBox="0 0 512 512">
+        <defs><polygon id="ray" points="256,86 244,262 268,262" fill="#D4A843"/></defs>
+        <use href="#ray" transform="rotate(0,256,256)"/>
+        <use href="#ray" transform="rotate(45,256,256)"/>
+        <use href="#ray" transform="rotate(90,256,256)"/>
+        <use href="#ray" transform="rotate(135,256,256)"/>
+        <use href="#ray" transform="rotate(180,256,256)"/>
+        <use href="#ray" transform="rotate(225,256,256)"/>
+        <use href="#ray" transform="rotate(270,256,256)"/>
+        <use href="#ray" transform="rotate(315,256,256)"/>
+      </svg>
+      <span class="logo-text">cortex</span>
+    </div>
+    <h1>Why does every<br>vibe-coded app<br>look the same?</h1>
+    <p class="subtitle">Using Claude Code as a brand strategist and designer<br>to give your product real personality.</p>
+    <p class="author">Humayun Khan · learnwithcortex.com</p>
+  </section>
+
+  <!-- ============== SLIDE 2: The Sameness Problem ============== -->
+  <section class="slide slide-text" data-notes="Talk about the sameness epidemic. Vibe coding solved the technical problem — anyone can build. But it created a new problem: shadcn cards, tailwind defaults, the same gradient hero, the same pricing table, the same dark mode. Beautiful by default, beautifully identical.">
+    <p class="slide-label">The Sameness Epidemic</p>
+    <h2>Vibe coding solved building.<br>It made everything look the same.</h2>
+    <div class="sameness-grid">
+      <div class="sameness-card">
+        <div class="sameness-skeleton-bar short"></div>
+        <div class="sameness-skeleton-bar long"></div>
+        <div class="sameness-skeleton-bar medium"></div>
+        <div class="sameness-skeleton-button"></div>
+      </div>
+      <div class="sameness-card">
+        <div class="sameness-skeleton-bar short"></div>
+        <div class="sameness-skeleton-bar long"></div>
+        <div class="sameness-skeleton-bar medium"></div>
+        <div class="sameness-skeleton-button"></div>
+      </div>
+      <div class="sameness-card">
+        <div class="sameness-skeleton-bar short"></div>
+        <div class="sameness-skeleton-bar long"></div>
+        <div class="sameness-skeleton-bar medium"></div>
+        <div class="sameness-skeleton-button"></div>
+      </div>
+    </div>
+    <p style="margin-top:48px;font-size:22px;color:#aaa;">Same shadcn cards. Same tailwind defaults. Same purple accent.</p>
+    <p style="margin-top:8px;font-size:24px;color:#D4A843;font-style:italic;">Beautiful by default. Beautifully identical.</p>
+  </section>
+
+  <!-- ============== SLIDE 3: Personal → Public ============== -->
+  <section class="slide slide-text" data-notes="And there's another problem — most personal projects never become public ones. Not because they aren't useful. Because the brand and launch work feels like a whole different job. So good products stay on your localhost. The next slide is the reframe — Claude Code can do that work too.">
+    <p class="slide-label">And There's This</p>
+    <h2>Most personal projects<br>never become public.</h2>
+    <p style="font-size:22px;">Not because they aren't useful.</p>
+    <p style="font-size:22px;">Because the brand and launch work feels like a <span class="highlight">whole different job</span>.</p>
+    <p style="font-size:22px;color:#D4A843;font-style:italic;margin-top:24px;">So good products stay on your localhost.</p>
+  </section>
+
+  <!-- ============== SLIDE 4: The Reframe ============== -->
+  <section class="slide slide-text" data-notes="The reframe. Personality is hard because branding is a different discipline than coding. Most builders skip it. But Claude Code can be your brand strategist AND designer — not just your engineer.">
+    <p class="slide-label">The Reframe</p>
+    <h2>Branding is a different discipline.<br>So treat it that way.</h2>
+    <p style="font-size:22px;">Most builders treat Claude Code like an <span style="color:#666;">engineer</span>.</p>
+    <p style="font-size:22px;">It can also be your <span class="highlight">brand strategist</span>, <span class="highlight">market researcher</span>, <span class="highlight">visual designer</span>, <span class="highlight">copywriter</span>, and <span class="highlight">launch consultant</span>.</p>
+    <p style="font-size:22px;">Personality comes from process. So I built one.</p>
+  </section>
+
+  <!-- ============== SLIDE 4: The Skill ============== -->
+  <section class="slide slide-text" data-notes="Introduce /launch. One skill. Seven phases. Real artifacts at every step. This isn't a one-shot prompt — it's a structured workflow.">
+    <p class="slide-label">The Solution</p>
+    <h2>One skill. Seven phases.<br>Real artifacts at every step.</h2>
+    <p style="font-size:22px;">I built <span class="highlight">/launch</span> — a Claude Code skill that takes you from "I built this for myself" to "ready for beta users" in a single conversation.</p>
+    <div class="phases">
+      <div class="phase"><div class="phase-num">01</div><div class="phase-name">Discovery</div></div>
+      <div class="phase"><div class="phase-num">02</div><div class="phase-name">Research</div></div>
+      <div class="phase"><div class="phase-num">03</div><div class="phase-name">Brand</div></div>
+      <div class="phase"><div class="phase-num">04</div><div class="phase-name">Logo</div></div>
+      <div class="phase"><div class="phase-num">05</div><div class="phase-name">Landing</div></div>
+      <div class="phase"><div class="phase-num">06</div><div class="phase-name">Specs</div></div>
+      <div class="phase"><div class="phase-num">07</div><div class="phase-name">Launch</div></div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 6: SKILL.md ============== -->
+  <section class="slide slide-shot" data-notes="Show the actual skill file. Don't read it — gesture at it. Mention each phase generates real artifacts. The skill is repeatable, can be run on any project.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">Inside the Skill</p>
+        <p class="shot-title">SKILL.md</p>
+      </div>
+      <p class="shot-meta">7 phases · ~280 lines · Reusable across products</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">~/.claude/skills/launch/SKILL.md</span>
+        <a class="shot-link" href="skill-view.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="skill-view.html" loading="lazy" title="SKILL.md"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 7: Mood Board ============== -->
+  <section class="slide slide-shot" data-notes="Phase 3: Brand. Researches reference brands in the space — Aesop, Penguin, Readwise, Linear — and proposes palette directions. None of this is shadcn.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">Phase 3 — Brand Identity</p>
+        <p class="shot-title">Mood Board</p>
+      </div>
+      <p class="shot-meta">Reference brands · Palette exploration · Typography</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">localhost:3001/brand/moodboard.html</span>
+        <a class="shot-link" href="moodboard.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="moodboard.html" loading="lazy" title="Mood Board"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 6: Design System ============== -->
+  <section class="slide slide-shot" data-notes="THIS IS THE WOW. Click VIEW LIVE → to open the real page in a new tab, then click the dark/light toggle in the top right. Pause for the reaction.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">Phase 3 — Design System</p>
+        <p class="shot-title">Brand System with Light/Dark Toggle</p>
+      </div>
+      <p class="shot-meta">Click VIEW LIVE → toggle the theme</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">localhost:3001/brand/system.html</span>
+        <a class="shot-link" href="system.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="system.html" loading="lazy" title="Brand System"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 7: Icons ============== -->
+  <section class="slide slide-shot" data-notes="Phase 4: Logo. Gemini generates concepts, then we vectorize the winner from scratch as clean SVG. Same logo from 256px down to 16px favicon.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">Phase 4 — Logo & Icon</p>
+        <p class="shot-title">Generated with Gemini, Vectorized as SVG</p>
+      </div>
+      <p class="shot-meta">6 concepts · Iteration · Final vector</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">localhost:3001/brand/icons/preview.html</span>
+        <a class="shot-link" href="icons/preview.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="icons/preview.html" loading="lazy" title="Icon Concepts"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 8: Landing Page ============== -->
+  <section class="slide slide-shot" data-notes="Phase 5: Landing page. Hero, problem, three pillars, showcase cards (AI-generated using the same pipeline the actual app uses), pricing.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">Phase 5 — Landing Page</p>
+        <p class="shot-title">Marketing Page with Pricing</p>
+      </div>
+      <p class="shot-meta">Hero · Showcase · Pricing · CTA</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">learnwithcortex.com</span>
+        <a class="shot-link" href="landing.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="landing.html" loading="lazy" title="Landing Page"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 9: The Unlock ============== -->
+  <section class="slide slide-text" data-notes="The critical insight that makes this work. The skill produces a SPEC — DESIGN.md — that captures every decision. A separate Claude Code agent runs the reskin in parallel.">
+    <p class="slide-label">The Critical Insight</p>
+    <h2>Decouple <span class="highlight">design</span><br>from <span class="highlight">implementation</span>.</h2>
+    <p style="font-size:22px;">The skill doesn't try to reskin the app in the same session.</p>
+    <p style="font-size:22px;">It produces <span class="highlight">DESIGN.md</span> — a complete spec capturing every token, component, and decision.</p>
+    <p style="font-size:22px;">A separate Claude Code agent runs the reskin in parallel while I keep iterating on brand and marketing.</p>
+    <p style="font-size:24px;color:#D4A843;margin-top:32px;">One conversation per concern. Specs are the handoff.</p>
+  </section>
+
+  <!-- ============== SLIDE 11: DESIGN.md ============== -->
+  <section class="slide slide-shot" data-notes="The output of running the skill on Cortex. Every token. Every component. Every decision. This is the spec another agent uses to actually reskin the app.">
+    <div class="shot-header">
+      <div>
+        <p class="slide-label" style="margin-bottom:8px;">The Deliverable</p>
+        <p class="shot-title">DESIGN.md</p>
+      </div>
+      <p class="shot-meta">Output of /launch · ~310 lines · Handoff to reskin agent</p>
+    </div>
+    <div class="shot-frame">
+      <div class="shot-bar">
+        <div class="shot-dot red"></div>
+        <div class="shot-dot yellow"></div>
+        <div class="shot-dot green"></div>
+        <span class="shot-url">cortex/DESIGN.md</span>
+        <a class="shot-link" href="design-view.html" target="_blank">VIEW LIVE →</a>
+      </div>
+      <div class="shot-image-wrap">
+        <iframe src="design-view.html" loading="lazy" title="DESIGN.md"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 13: Compounding ============== -->
+  <section class="slide slide-stat" data-notes="A couple hours, not weeks. Now it's repeatable. The next product is faster.">
+    <p class="slide-label" style="margin-bottom:24px;">The Compounding Move</p>
+    <h2 style="font-family:'Fraunces',serif;font-weight:400;font-size:64px;color:#fff;margin-bottom:24px;text-align:center;">A couple hours.<br>Now it's a skill.</h2>
+    <p style="font-size:22px;color:#aaa;max-width:700px;margin:0 auto;">Cortex's whole brand system, landing page, marketing plan, and legal pages came out of one conversation in an afternoon.</p>
+    <p style="font-size:18px;color:#666;margin-top:32px;font-family:'JetBrains Mono',monospace;">$ /launch</p>
+  </section>
+
+  <!-- ============== SLIDE 13: Close ============== -->
+  <section class="slide slide-close" data-notes="Drop the URL. Thank the audience. End.">
+    <div class="logo" style="display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:32px;">
+      <svg viewBox="0 0 512 512" width="64" height="64">
+        <defs><polygon id="ray2" points="256,86 244,262 268,262" fill="#D4A843"/></defs>
+        <use href="#ray2" transform="rotate(0,256,256)"/>
+        <use href="#ray2" transform="rotate(45,256,256)"/>
+        <use href="#ray2" transform="rotate(90,256,256)"/>
+        <use href="#ray2" transform="rotate(135,256,256)"/>
+        <use href="#ray2" transform="rotate(180,256,256)"/>
+        <use href="#ray2" transform="rotate(225,256,256)"/>
+        <use href="#ray2" transform="rotate(270,256,256)"/>
+        <use href="#ray2" transform="rotate(315,256,256)"/>
+      </svg>
+      <span style="font-family:'Newsreader',serif;font-size:48px;color:#fff;">cortex</span>
+    </div>
+    <h2>Learn anything.<br>Remember everything.</h2>
+    <p class="url">learnwithcortex.com</p>
+    <p class="tagline">Built with /launch</p>
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid #2a2a2a;max-width:520px;margin-left:auto;margin-right:auto;">
+      <p style="font-size:13px;color:#666;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:12px;">Want the skill?</p>
+      <p style="font-size:18px;color:#aaa;line-height:1.6;">Connect with me on LinkedIn at <a href="https://linkedin.com/in/khanhumayun" target="_blank" style="color:#D4A843;text-decoration:none;border-bottom:1px solid rgba(212,168,67,0.4);">/khanhumayun</a> and I'll DM you the SKILL.md file.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Speaker notes -->
+<div class="speaker-notes" id="speaker-notes">
+  <div class="speaker-notes-label">Speaker Notes</div>
+  <div id="notes-content"></div>
+</div>
+
+<!-- Nav bar -->
+<div class="nav-bar">
+  <span class="nav-counter"><span class="current" id="current">1</span> / <span id="total">13</span></span>
+  <div class="nav-dots" id="dots"></div>
+  <span class="nav-hint">← →  ·  N for notes  ·  F for fullscreen</span>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  const currentEl = document.getElementById('current');
+  const totalEl = document.getElementById('total');
+  const notesEl = document.getElementById('speaker-notes');
+  const notesContentEl = document.getElementById('notes-content');
+  let current = 0;
+
+  totalEl.textContent = slides.length;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot';
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(i) {
+    if (i < 0 || i >= slides.length) return;
+    slides[current].classList.remove('active');
+    document.querySelectorAll('.nav-dot')[current].classList.remove('active');
+    current = i;
+    slides[current].classList.add('active');
+    document.querySelectorAll('.nav-dot')[current].classList.add('active');
+    currentEl.textContent = current + 1;
+    notesContentEl.textContent = slides[current].dataset.notes || '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      goTo(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      goTo(current - 1);
+    } else if (e.key === 'Home') {
+      goTo(0);
+    } else if (e.key === 'End') {
+      goTo(slides.length - 1);
+    } else if (e.key === 'n' || e.key === 'N') {
+      notesEl.classList.toggle('visible');
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  });
+
+  notesContentEl.textContent = slides[0].dataset.notes || '';
+</script>
+
+</body>
+</html>

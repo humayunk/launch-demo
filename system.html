@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cortex Brand System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a1a1a;
+      --bg-sidebar: #161616;
+      --bg-card: #222222;
+      --bg-card-hover: #2a2a2a;
+      --border: #2a2a2a;
+      --border-hover: #333333;
+      --bg-overlay: rgba(0,0,0,0.5);
+      --bg-detail-panel: #1e1e1e;
+      --text-headline: #ffffff;
+      --text-body: #e8e8e8;
+      --text-secondary: #aaaaaa;
+      --text-muted: #888888;
+      --text-structural: #666666;
+      --text-faint: #555555;
+      --text-ghost: #444444;
+      --gold: #D4A843;
+      --gold-hover: #E4B853;
+      --gold-bg: rgba(212, 168, 67, 0.08);
+      --gold-glow: rgba(212, 168, 67, 0.4);
+      --card-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
+      --card-shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+      --browser-bar: #1e1e1e;
+      --bg-tag: #1a1a1a;
+      --bg-input: #222222;
+      --dimmed-cards: 0.3;
+    }
+
+    [data-theme="light"] {
+      --bg: #FAF7F2;
+      --bg-sidebar: #f0ebe4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f5f2ed;
+      --border: #e8e4dc;
+      --border-hover: #d8d4cc;
+      --bg-overlay: rgba(0,0,0,0.15);
+      --bg-detail-panel: #ffffff;
+      --text-headline: #1a1a1a;
+      --text-body: #3a3a3a;
+      --text-secondary: #777777;
+      --text-muted: #999999;
+      --text-structural: #aaaaaa;
+      --text-faint: #bbbbbb;
+      --text-ghost: #cccccc;
+      --gold: #B8922E;
+      --gold-hover: #A07D20;
+      --gold-bg: rgba(184, 146, 46, 0.08);
+      --gold-glow: rgba(184, 146, 46, 0.3);
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+      --card-shadow-sm: 0 1px 4px rgba(0,0,0,0.06);
+      --browser-bar: #efe9e1;
+      --bg-tag: #f0ebe4;
+      --bg-input: #ffffff;
+      --dimmed-cards: 0.15;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, .sidebar, .browser-window, .browser-bar, .concept-card, .tag-pill,
+    .flashcard, .detail-panel, .stats-bar, .nav-item, .btn-gold, .btn-secondary {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-body);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+    }
+
+    section {
+      margin-bottom: 120px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
+    /* --- Theme Toggle --- */
+    .theme-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 1000;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* --- Section Label --- */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 48px;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* --- Browser Window Mockup --- */
+    .browser-window {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .browser-bar {
+      background: var(--browser-bar);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .browser-dot.red { background: #ff5f57; }
+    .browser-dot.yellow { background: #febc2e; }
+    .browser-dot.green { background: #28c840; }
+
+    .browser-content {
+      padding: 0;
+    }
+
+    /* --- Brand Header (Section 0) --- */
+    .brand-header {
+      text-align: center;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .brand-header h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 56px;
+      color: var(--text-headline);
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .brand-header .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 64px;
+    }
+
+    /* Color Palette */
+    .palette-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+      margin-bottom: 20px;
+    }
+
+    .palette-strip {
+      display: flex;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .palette-swatch {
+      flex: 1;
+      height: 64px;
+      position: relative;
+    }
+
+    .palette-labels {
+      display: flex;
+      max-width: 900px;
+      margin: 0 auto 64px;
+    }
+
+    .palette-labels span {
+      flex: 1;
+      font-size: 10px;
+      color: var(--text-structural);
+      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Typography Scale */
+    .type-scale {
+      text-align: left;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .type-row:last-child {
+      border-bottom: none;
+    }
+
+    .type-meta {
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .type-meta .name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+    }
+
+    .type-meta .spec {
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-top: 2px;
+    }
+
+    .type-sample {
+      flex: 1;
+    }
+
+    .type-sample.h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 48px;
+      color: var(--text-headline);
+      line-height: 1.2;
+    }
+
+    .type-sample.h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: var(--text-headline);
+      line-height: 1.3;
+    }
+
+    .type-sample.h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--text-headline);
+      line-height: 1.4;
+    }
+
+    .type-sample.body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    .type-sample.meta-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .type-sample.label-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+    }
+
+    /* --- App Layout (shared) --- */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 600px;
+    }
+
+    .sidebar {
+      background: var(--bg-sidebar);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-logo {
+      font-family: 'Newsreader', serif;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--text-headline);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px;
+    }
+
+    .sidebar-logo .logo-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .nav-item {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-radius: 8px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+      background: var(--gold-bg);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 16px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-bottom-item {
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--text-structural);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--border-hover);
+      border: 1px solid var(--text-ghost);
+    }
+
+    /* --- Main Content Area --- */
+    .main-content {
+      padding: 32px 40px;
+    }
+
+    .search-bar {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 28px;
+      color: var(--text-faint);
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Tags */
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .tag-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Sort bar */
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .sort-dropdown {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .view-toggles {
+      display: flex;
+      gap: 12px;
+    }
+
+    .view-toggle {
+      font-size: 13px;
+      color: var(--text-structural);
+    }
+
+    .view-toggle.active {
+      color: var(--gold);
+    }
+
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .concept-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-image {
+      height: 140px;
+      width: 100%;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 18px;
+      color: var(--text-headline);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 3px 10px;
+      background: var(--bg-tag);
+      border-radius: 12px;
+    }
+
+    .card-tag .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    /* Add card */
+    .add-card {
+      border: 2px dashed var(--border);
+      background: transparent;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      gap: 12px;
+    }
+
+    .add-card .plus-icon {
+      font-size: 32px;
+      color: var(--text-faint);
+      font-weight: 300;
+    }
+
+    .add-card .add-text {
+      font-size: 14px;
+      color: var(--text-structural);
+    }
+
+    /* Gradients -- these stay hardcoded (actual color values, not UI colors) */
+    .grad-warm-orange { background: linear-gradient(135deg, #C4873A, #E4975A); }
+    .grad-deep-blue { background: linear-gradient(135deg, #2A3550, #4A5570); }
+    .grad-warm-red { background: linear-gradient(135deg, #8B3A3A, #B44A4A); }
+    .grad-green { background: linear-gradient(135deg, #3A6B4A, #4A8B5A); }
+    .grad-purple { background: linear-gradient(135deg, #4A3A6B, #6A5A8B); }
+    .grad-slate { background: linear-gradient(135deg, #4A5560, #6A7580); }
+    .grad-deep-green { background: linear-gradient(135deg, #2A4A3A, #3A6A4A); }
+    .grad-teal { background: linear-gradient(135deg, #2A5A5A, #3A7A7A); }
+    .grad-rose { background: linear-gradient(135deg, #6B3A5A, #8B4A6A); }
+
+    /* Dot colors -- these stay hardcoded (identity colors) */
+    .dot-rose { background: #B07A8A; }
+    .dot-sage { background: #7A9A7A; }
+    .dot-slate { background: #7A8A9A; }
+    .dot-amber { background: #C4A03A; }
+    .dot-lavender { background: #9A8AB0; }
+    .dot-coral { background: #C07A6A; }
+    .dot-sky { background: #6A9AB0; }
+    .dot-mint { background: #6AB09A; }
+    .dot-peach { background: #C09A7A; }
+    .dot-indigo { background: #6A6AB0; }
+    .dot-red { background: #B05A5A; }
+    .dot-teal { background: #5AA0A0; }
+
+    /* --- Section 2: Cortex Detail --- */
+    .back-link {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .cortex-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .cortex-header .dot-lg {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .cortex-header h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 32px;
+      color: var(--text-headline);
+    }
+
+    .cortex-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-structural);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    /* --- Section 3: Flashcard --- */
+    .flashcard-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      min-height: 600px;
+    }
+
+    .flashcard-top {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .flashcard-back {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      align-self: flex-start;
+    }
+
+    .flashcard-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .badge-new {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+
+    .flashcard {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: var(--card-shadow-sm);
+    }
+
+    .flashcard-image {
+      height: 400px;
+      width: 100%;
+    }
+
+    .flashcard-body {
+      padding: 28px 28px 32px;
+    }
+
+    .flashcard-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: var(--text-headline);
+      margin-bottom: 20px;
+    }
+
+    .flashcard-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text-faint);
+    }
+
+    .flashcard-hint {
+      font-size: 13px;
+      color: var(--text-structural);
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    /* --- Section 4: Detail Panel --- */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+
+    .detail-bg {
+      background: var(--bg-overlay);
+      padding: 32px;
+      position: relative;
+    }
+
+    .detail-bg-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      opacity: var(--dimmed-cards);
+    }
+
+    .detail-bg-card {
+      background: var(--bg);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .detail-bg-card .card-image {
+      height: 100px;
+    }
+
+    .detail-bg-card .card-body {
+      padding: 12px;
+    }
+
+    .detail-bg-card .card-title {
+      font-size: 14px;
+    }
+
+    .detail-panel {
+      background: var(--bg-detail-panel);
+      border-left: 1px solid var(--border);
+      padding: 32px;
+      overflow-y: auto;
+    }
+
+    .detail-close {
+      font-size: 18px;
+      color: var(--text-structural);
+      float: right;
+      cursor: pointer;
+    }
+
+    .detail-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      margin-top: 8px;
+    }
+
+    .detail-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: var(--text-headline);
+      margin-bottom: 12px;
+    }
+
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .detail-meta .date {
+      color: var(--text-structural);
+    }
+
+    .detail-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+      margin-bottom: 10px;
+      margin-top: 24px;
+    }
+
+    .detail-cortex-pills {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .detail-add-link {
+      font-size: 13px;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .detail-subheading {
+      font-size: 14px;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 8px;
+      margin-top: 20px;
+    }
+
+    .detail-body-text {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    /* --- Section 5: Serendipity --- */
+    .serendipity-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 40px;
+      min-height: 550px;
+    }
+
+    .serendipity-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 40px;
+      color: var(--text-headline);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .serendipity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 480px;
+      width: 100%;
+      margin-bottom: 32px;
+      box-shadow: var(--card-shadow-sm);
+    }
+
+    .serendipity-card .card-image {
+      height: 280px;
+    }
+
+    .serendipity-card .card-body {
+      padding: 24px;
+    }
+
+    .serendipity-card .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .serendipity-card .card-desc {
+      margin-bottom: 16px;
+    }
+
+    .serendipity-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .btn-keep {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .btn-forget {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: transparent;
+      padding: 10px 32px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    .keyboard-hint {
+      font-size: 12px;
+      color: var(--text-faint);
+    }
+
+    /* --- Section 6: Stats Bar --- */
+    .stats-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--text-headline);
+    }
+
+    .stat-number.gold {
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* --- Section 7: Component Library --- */
+    .component-group {
+      margin-bottom: 48px;
+    }
+
+    .component-group-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-structural);
+      margin-bottom: 20px;
+    }
+
+    .component-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    .btn-gold-hover {
+      background: var(--gold-hover);
+      color: var(--bg);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .btn-secondary-hover {
+      background: var(--bg-card-hover);
+      color: var(--text-body);
+      border: 1px solid var(--border-hover);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    .btn-ghost-hover {
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+    }
+
+    /* Input components */
+    .input-search {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 20px;
+      color: var(--text-faint);
+    }
+
+    .input-standard {
+      width: 100%;
+      max-width: 360px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text-faint);
+    }
+
+    /* Nav components */
+    .nav-demo {
+      background: var(--bg-sidebar);
+      border-radius: 12px;
+      padding: 16px;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 180px;
+    }
+
+    /* Card demos */
+    .card-demo-row {
+      display: flex;
+      gap: 24px;
+    }
+
+    .card-demo {
+      width: 260px;
+    }
+
+    /* SVG icons (inline) */
+    .icon-grid {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+    }
+
+    .icon-list {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* State label row */
+    .state-label {
+      font-size: 10px;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="theme-toggle">&#9728; Light</button>
+
+  <div class="page">
+
+    <!-- ============================================ -->
+    <!-- SECTION 0: Brand Header                      -->
+    <!-- ============================================ -->
+    <section class="brand-header">
+      <h1>Cortex Brand System</h1>
+      <p class="subtitle">Dark editorial minimalism. Gold as the only voice in the room.</p>
+
+      <p class="palette-label">Dark Mode Palette</p>
+      <div class="palette-strip">
+        <div class="palette-swatch" style="background: #1a1a1a;"></div>
+        <div class="palette-swatch" style="background: #161616;"></div>
+        <div class="palette-swatch" style="background: #222222;"></div>
+        <div class="palette-swatch" style="background: #2a2a2a;"></div>
+        <div class="palette-swatch" style="background: #444444;"></div>
+        <div class="palette-swatch" style="background: #666666;"></div>
+        <div class="palette-swatch" style="background: #888888;"></div>
+        <div class="palette-swatch" style="background: #aaaaaa;"></div>
+        <div class="palette-swatch" style="background: #e8e8e8;"></div>
+        <div class="palette-swatch" style="background: #ffffff;"></div>
+        <div class="palette-swatch" style="background: #D4A843;"></div>
+        <div class="palette-swatch" style="background: #E4B853;"></div>
+      </div>
+      <div class="palette-labels">
+        <span>#1a1a1a<br>Background</span>
+        <span>#161616<br>Sidebar</span>
+        <span>#222<br>Card</span>
+        <span>#2a2a2a<br>Border</span>
+        <span>#444<br>Ghost</span>
+        <span>#666<br>Structural</span>
+        <span>#888<br>Muted</span>
+        <span>#aaa<br>Secondary</span>
+        <span>#e8e8e8<br>Body</span>
+        <span>#fff<br>Headline</span>
+        <span>#D4A843<br>Gold</span>
+        <span>#E4B853<br>Gold Hover</span>
+      </div>
+
+      <p class="palette-label">Light Mode Palette</p>
+      <div class="palette-strip">
+        <div class="palette-swatch" style="background: #FAF7F2;"></div>
+        <div class="palette-swatch" style="background: #f0ebe4;"></div>
+        <div class="palette-swatch" style="background: #ffffff;"></div>
+        <div class="palette-swatch" style="background: #e8e4dc;"></div>
+        <div class="palette-swatch" style="background: #cccccc;"></div>
+        <div class="palette-swatch" style="background: #aaaaaa;"></div>
+        <div class="palette-swatch" style="background: #999999;"></div>
+        <div class="palette-swatch" style="background: #777777;"></div>
+        <div class="palette-swatch" style="background: #3a3a3a;"></div>
+        <div class="palette-swatch" style="background: #1a1a1a;"></div>
+        <div class="palette-swatch" style="background: #B8922E;"></div>
+        <div class="palette-swatch" style="background: #A07D20;"></div>
+      </div>
+      <div class="palette-labels">
+        <span>#FAF7F2<br>Background</span>
+        <span>#f0ebe4<br>Sidebar</span>
+        <span>#fff<br>Card</span>
+        <span>#e8e4dc<br>Border</span>
+        <span>#ccc<br>Ghost</span>
+        <span>#aaa<br>Structural</span>
+        <span>#999<br>Muted</span>
+        <span>#777<br>Secondary</span>
+        <span>#3a3a3a<br>Body</span>
+        <span>#1a1a1a<br>Headline</span>
+        <span>#B8922E<br>Gold</span>
+        <span>#A07D20<br>Gold Hover</span>
+      </div>
+
+      <div class="type-scale">
+        <p class="palette-label" style="margin-bottom: 24px;">Typography Scale</p>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">H1</div>
+            <div class="spec">Fraunces 48px / 400</div>
+          </div>
+          <div class="type-sample h1">Your Second Brain</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">H2</div>
+            <div class="spec">Fraunces 32px / 400</div>
+          </div>
+          <div class="type-sample h2">Brazilian Jiu-Jitsu</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">H3</div>
+            <div class="spec">Fraunces 22px / 400</div>
+          </div>
+          <div class="type-sample h3">Concepts and Connections</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">Body</div>
+            <div class="spec">Inter 15px / 300</div>
+          </div>
+          <div class="type-sample body">The guard is a ground grappling position where the practitioner has their back to the ground while attempting to control the opponent with their legs.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">Meta</div>
+            <div class="spec">Inter 13px / 400</div>
+          </div>
+          <div class="type-sample meta-text">3 concepts &middot; Last updated Mar 23, 2026</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="name">Label</div>
+            <div class="spec">Inter 11px / 600 / 3px</div>
+          </div>
+          <div class="type-sample label-text">Cortexes</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: Sidebar + Everything View         -->
+    <!-- ============================================ -->
+    <p class="section-label">01 &mdash; Everything View</p>
+    <p class="section-desc">The default view. Every concept across all cortexes, searchable and browsable. Topic tags filter the grid. Gold accents mark the active state.</p>
+
+    <section>
+      <div class="browser-window">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-content">
+          <div class="app-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <div class="sidebar-logo">
+                <svg class="logo-icon" viewBox="0 0 512 512"><defs><polygon id="sr" points="256,86 244,262 268,262" fill="#D4A843"/></defs><use href="#sr" transform="rotate(0,256,256)"/><use href="#sr" transform="rotate(45,256,256)"/><use href="#sr" transform="rotate(90,256,256)"/><use href="#sr" transform="rotate(135,256,256)"/><use href="#sr" transform="rotate(180,256,256)"/><use href="#sr" transform="rotate(225,256,256)"/><use href="#sr" transform="rotate(270,256,256)"/><use href="#sr" transform="rotate(315,256,256)"/></svg>
+                cortex
+              </div>
+              <div class="nav-item active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                Everything
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+                Cortexes
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6L14 6.5L11 9.5L12 14L8 12L4 14L5 9.5L2 6.5L6 6L8 2Z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+                Learn
+              </div>
+              <div class="sidebar-bottom">
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4.5V7L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Settings
+                </div>
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M3 12.5C3 10 5 8.5 7 8.5C9 8.5 11 10 11 12.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <div class="avatar-circle"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+              <div class="search-bar">Search your brain...</div>
+
+              <div class="tags-row">
+                <div class="tag-pill"><span class="dot dot-amber"></span> AI</div>
+                <div class="tag-pill"><span class="dot dot-red"></span> BJJ</div>
+                <div class="tag-pill"><span class="dot dot-lavender"></span> Philosophy</div>
+                <div class="tag-pill"><span class="dot dot-sky"></span> French</div>
+                <div class="tag-pill"><span class="dot dot-sage"></span> Economics</div>
+                <div class="tag-pill"><span class="dot dot-teal"></span> Neuroscience</div>
+                <div class="tag-pill"><span class="dot dot-rose"></span> Dating</div>
+                <div class="tag-pill"><span class="dot dot-indigo"></span> Programming</div>
+                <div class="tag-pill"><span class="dot dot-coral"></span> UX</div>
+                <div class="tag-pill"><span class="dot dot-mint"></span> Mental Health</div>
+                <div class="tag-pill"><span class="dot dot-slate"></span> Systems Thinking</div>
+                <div class="tag-pill"><span class="dot dot-peach"></span> Politics</div>
+              </div>
+
+              <div class="sort-bar">
+                <span class="sort-dropdown">Newest &#9662;</span>
+                <div class="view-toggles">
+                  <span class="view-toggle active">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                  </span>
+                  <span class="view-toggle">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="1" y1="3" x2="15" y2="3" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="7" x2="15" y2="7" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="1.2"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-grid">
+                <!-- Add Card -->
+                <div class="add-card">
+                  <span class="plus-icon">+</span>
+                  <span class="add-text">Add a Node</span>
+                </div>
+
+                <!-- Card: Anarchism -->
+                <div class="concept-card">
+                  <div class="card-image grad-warm-orange"></div>
+                  <div class="card-body">
+                    <div class="card-title">Anarchism</div>
+                    <div class="card-desc">A political philosophy advocating self-governed societies based on voluntary institutions.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-peach"></span> Politics</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: Bad Faith -->
+                <div class="concept-card">
+                  <div class="card-image grad-deep-blue"></div>
+                  <div class="card-body">
+                    <div class="card-title">Bad Faith</div>
+                    <div class="card-desc">Sartre's concept of self-deception, where one denies their radical freedom.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-lavender"></span> Philosophy</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: Close Guard -->
+                <div class="concept-card">
+                  <div class="card-image grad-warm-red"></div>
+                  <div class="card-body">
+                    <div class="card-title">Close Guard</div>
+                    <div class="card-desc">A fundamental ground position where you control the opponent with your legs wrapped around their torso.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-red"></span> BJJ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: Conjugation -->
+                <div class="concept-card">
+                  <div class="card-image grad-green"></div>
+                  <div class="card-body">
+                    <div class="card-title">Conjugation</div>
+                    <div class="card-desc">The systematic variation of verb forms to express tense, mood, person, and number.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-sky"></span> French</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: Neuroplasticity -->
+                <div class="concept-card">
+                  <div class="card-image grad-purple"></div>
+                  <div class="card-body">
+                    <div class="card-title">Neuroplasticity</div>
+                    <div class="card-desc">The brain's ability to reorganize itself by forming new neural connections throughout life.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-teal"></span> Neuroscience</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: Cortex Detail View (BJJ)          -->
+    <!-- ============================================ -->
+    <p class="section-label">02 &mdash; Cortex Detail</p>
+    <p class="section-desc">A single cortex and its concepts. The gold Learn button initiates spaced repetition. Each cortex has its own color identity through the dot system.</p>
+
+    <section>
+      <div class="browser-window">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-content">
+          <div class="app-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <div class="sidebar-logo">
+                <svg class="logo-icon" viewBox="0 0 512 512"><defs><polygon id="sr" points="256,86 244,262 268,262" fill="#D4A843"/></defs><use href="#sr" transform="rotate(0,256,256)"/><use href="#sr" transform="rotate(45,256,256)"/><use href="#sr" transform="rotate(90,256,256)"/><use href="#sr" transform="rotate(135,256,256)"/><use href="#sr" transform="rotate(180,256,256)"/><use href="#sr" transform="rotate(225,256,256)"/><use href="#sr" transform="rotate(270,256,256)"/><use href="#sr" transform="rotate(315,256,256)"/></svg>
+                cortex
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                Everything
+              </div>
+              <div class="nav-item active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+                Cortexes
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6L14 6.5L11 9.5L12 14L8 12L4 14L5 9.5L2 6.5L6 6L8 2Z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+                Learn
+              </div>
+              <div class="sidebar-bottom">
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4.5V7L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Settings
+                </div>
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M3 12.5C3 10 5 8.5 7 8.5C9 8.5 11 10 11 12.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <div class="avatar-circle"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+              <div class="back-link">&larr; Cortexes</div>
+
+              <div class="cortex-header">
+                <span class="dot-lg dot-red" style="width:10px;height:10px;border-radius:50%;background:#B05A5A;display:inline-block;"></span>
+                <h2>BJJ</h2>
+              </div>
+              <p class="cortex-subtitle">3 concepts</p>
+
+              <div class="action-buttons">
+                <button class="btn-gold">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12 5L9.5 7.5L10 11L7 9.5L4 11L4.5 7.5L2 5L5.5 4.5L7 1Z" stroke="currentColor" stroke-width="1" fill="currentColor"/></svg>
+                  Learn
+                </button>
+                <button class="btn-secondary">Import</button>
+                <button class="btn-secondary">Share</button>
+                <button class="btn-icon">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4H11M4 4V11C4 11.5 4.5 12 5 12H9C9.5 12 10 11.5 10 11V4M5.5 4V3C5.5 2.5 6 2 6.5 2H7.5C8 2 8.5 2.5 8.5 3V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+
+              <div class="card-grid">
+                <!-- Shrimping -->
+                <div class="concept-card">
+                  <div class="card-image grad-warm-orange"></div>
+                  <div class="card-body">
+                    <div class="card-title">Shrimping</div>
+                    <div class="card-desc">A hip escape movement fundamental to creating space and recovering guard from bottom positions.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-red"></span> BJJ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Side Control -->
+                <div class="concept-card">
+                  <div class="card-image grad-slate"></div>
+                  <div class="card-body">
+                    <div class="card-title">Side Control</div>
+                    <div class="card-desc">A dominant pinning position where you control your opponent from the side, chest to chest.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-red"></span> BJJ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Close Guard -->
+                <div class="concept-card">
+                  <div class="card-image grad-deep-green"></div>
+                  <div class="card-body">
+                    <div class="card-title">Close Guard</div>
+                    <div class="card-desc">A ground position where you wrap your legs around your opponent's torso to control distance and attack.</div>
+                    <div class="card-tags">
+                      <span class="card-tag"><span class="dot dot-red"></span> BJJ</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: Learn / Flashcard Mode            -->
+    <!-- ============================================ -->
+    <p class="section-label">03 &mdash; Learn Mode</p>
+    <p class="section-desc">Spaced repetition review. Minimal chrome, full focus on the concept. The card fills the viewport with the image and a recall prompt.</p>
+
+    <section>
+      <div class="browser-window">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-content">
+          <div class="flashcard-view">
+            <div class="flashcard-back" style="width:100%;">&larr; BJJ</div>
+
+            <div class="flashcard-progress">
+              <span style="color:var(--text-muted); font-size:13px;">1 of 3 concepts</span>
+              <span class="badge-new">NEW</span>
+            </div>
+
+            <div class="flashcard">
+              <div class="flashcard-image grad-warm-orange"></div>
+              <div class="flashcard-body">
+                <div class="flashcard-title">Shrimping</div>
+                <div class="flashcard-input">What is it?</div>
+              </div>
+            </div>
+
+            <p class="flashcard-hint">Press Space to reveal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: Concept Detail Panel              -->
+    <!-- ============================================ -->
+    <p class="section-label">04 &mdash; Concept Detail</p>
+    <p class="section-desc">A slide-over panel showing the full concept. Gold subheadings structure the explanation. The background grid dims to maintain focus.</p>
+
+    <section>
+      <div class="browser-window">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-content">
+          <div class="detail-layout">
+            <!-- Left: Dimmed grid -->
+            <div class="detail-bg">
+              <div class="detail-bg-grid">
+                <div class="detail-bg-card">
+                  <div class="card-image grad-warm-orange"></div>
+                  <div class="card-body">
+                    <div class="card-title" style="font-size:14px;">Shrimping</div>
+                  </div>
+                </div>
+                <div class="detail-bg-card">
+                  <div class="card-image grad-deep-green"></div>
+                  <div class="card-body">
+                    <div class="card-title" style="font-size:14px;">Close Guard</div>
+                  </div>
+                </div>
+                <div class="detail-bg-card">
+                  <div class="card-image grad-warm-red"></div>
+                  <div class="card-body">
+                    <div class="card-title" style="font-size:14px;">Mount</div>
+                  </div>
+                </div>
+                <div class="detail-bg-card">
+                  <div class="card-image grad-purple"></div>
+                  <div class="card-body">
+                    <div class="card-title" style="font-size:14px;">Armbar</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Detail Panel -->
+            <div class="detail-panel">
+              <span class="detail-close">&times;</span>
+              <div class="detail-image grad-slate"></div>
+              <div class="detail-title">Side Control</div>
+              <div class="detail-meta">
+                <span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:-1px;margin-right:4px;"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1"/></svg>
+                  Technique
+                </span>
+                <span class="date">Mar 23, 2026</span>
+              </div>
+
+              <div class="detail-section-label">Cortexes</div>
+              <div class="detail-cortex-pills">
+                <span class="card-tag"><span class="dot dot-red"></span> BJJ</span>
+              </div>
+              <div class="detail-add-link">+ Add to cortex</div>
+
+              <div class="detail-section-label">Explanation</div>
+
+              <div class="detail-subheading">What it is</div>
+              <p class="detail-body-text">Side control is a dominant ground position in Brazilian Jiu-Jitsu where you pin your opponent to the mat from the side, with your chest pressing against theirs. Your hips are low, your weight is distributed to maximize pressure, and your arms control their head and hip.</p>
+
+              <div class="detail-subheading">When to use it</div>
+              <p class="detail-body-text">You transition to side control after passing the guard, sweeping from bottom, or taking down your opponent. It's a consolidation position -- a place to rest, plan your next attack, and wear down your opponent with pressure before advancing to mount or setting up submissions.</p>
+
+              <div class="detail-subheading">How it works</div>
+              <p class="detail-body-text">The key mechanics are weight distribution (chest-to-chest pressure), hip positioning (hips low and angled), and arm control (crossface and underhook). You want to deny your opponent the ability to create frames or recover guard by staying heavy and controlling their movement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 5: Serendipity View                  -->
+    <!-- ============================================ -->
+    <p class="section-label">05 &mdash; Serendipity</p>
+    <p class="section-desc">Random discovery. Surface a concept you haven't thought about in a while. Keep it or let it go. Simple, focused, meditative.</p>
+
+    <section>
+      <div class="browser-window">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-content">
+          <div class="app-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <div class="sidebar-logo">
+                <svg class="logo-icon" viewBox="0 0 512 512"><defs><polygon id="sr" points="256,86 244,262 268,262" fill="#D4A843"/></defs><use href="#sr" transform="rotate(0,256,256)"/><use href="#sr" transform="rotate(45,256,256)"/><use href="#sr" transform="rotate(90,256,256)"/><use href="#sr" transform="rotate(135,256,256)"/><use href="#sr" transform="rotate(180,256,256)"/><use href="#sr" transform="rotate(225,256,256)"/><use href="#sr" transform="rotate(270,256,256)"/><use href="#sr" transform="rotate(315,256,256)"/></svg>
+                cortex
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                Everything
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+                Cortexes
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6L14 6.5L11 9.5L12 14L8 12L4 14L5 9.5L2 6.5L6 6L8 2Z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+                Learn
+              </div>
+              <div class="nav-item active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L9 5L8 4L7 5L8 1Z" stroke="currentColor" stroke-width="1" fill="currentColor"/><path d="M8 6L9.5 8.5L12 8L10 10L11 13L8 11L5 13L6 10L4 8L6.5 8.5L8 6Z" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="3" cy="4" r="0.5" fill="currentColor"/><circle cx="13" cy="4" r="0.5" fill="currentColor"/><circle cx="12" cy="12" r="0.5" fill="currentColor"/><circle cx="4" cy="12" r="0.5" fill="currentColor"/></svg>
+                Spark
+              </div>
+              <div class="sidebar-bottom">
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4.5V7L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  Settings
+                </div>
+                <div class="sidebar-bottom-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M3 12.5C3 10 5 8.5 7 8.5C9 8.5 11 10 11 12.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                  <div class="avatar-circle"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="serendipity-view" style="background:var(--bg);">
+              <h2 class="serendipity-title">Spark</h2>
+
+              <div class="serendipity-card">
+                <div class="card-image grad-rose" style="height:280px;"></div>
+                <div class="card-body" style="padding:24px;">
+                  <div class="card-title" style="font-family:'Fraunces',serif;font-size:24px;color:var(--text-headline);margin-bottom:8px;">Attachment Theory</div>
+                  <div class="card-desc" style="margin-bottom:16px;">How early bonds with caregivers shape our patterns of relating to others throughout life. Secure, anxious, avoidant, and disorganized styles.</div>
+                  <div class="card-tags">
+                    <span class="card-tag"><span class="dot dot-mint"></span> Mental Health</span>
+                    <span class="card-tag"><span class="dot dot-rose"></span> Dating</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="serendipity-buttons">
+                <button class="btn-keep">Keep</button>
+                <button class="btn-forget">Forget</button>
+              </div>
+
+              <p class="keyboard-hint">&larr; &rarr; to navigate, Enter to view</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 6: Stats Bar                         -->
+    <!-- ============================================ -->
+    <p class="section-label">06 &mdash; Stats Bar</p>
+    <p class="section-desc">A compact review statistics component. The streak number glows gold -- the only metric that earns color.</p>
+
+    <section>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-number">12</span>
+          <span class="stat-label">due</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5</span>
+          <span class="stat-label">reviewed today</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number gold">7</span>
+          <span class="stat-label">day streak</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 7: Component Library                 -->
+    <!-- ============================================ -->
+    <p class="section-label">07 &mdash; Component Library</p>
+    <p class="section-desc">Individual UI primitives extracted from the mockups. Every interactive element, every state, every variant.</p>
+
+    <section>
+      <!-- Buttons -->
+      <div class="component-group">
+        <p class="component-group-title">Buttons</p>
+        <p class="state-label">Default</p>
+        <div class="component-row">
+          <button class="btn-gold">Primary</button>
+          <button class="btn-secondary">Secondary</button>
+          <button class="btn-ghost">Ghost</button>
+        </div>
+        <p class="state-label" style="margin-top:16px;">Hover</p>
+        <div class="component-row">
+          <button class="btn-gold-hover">Primary</button>
+          <button class="btn-secondary-hover">Secondary</button>
+          <button class="btn-ghost-hover">Ghost</button>
+        </div>
+      </div>
+
+      <!-- Tag Pills -->
+      <div class="component-group">
+        <p class="component-group-title">Tag Pills</p>
+        <div class="component-row">
+          <span class="tag-pill"><span class="dot dot-red"></span> BJJ</span>
+          <span class="tag-pill"><span class="dot dot-lavender"></span> Philosophy</span>
+          <span class="tag-pill"><span class="dot dot-sky"></span> French</span>
+          <span class="tag-pill"><span class="dot dot-amber"></span> AI</span>
+          <span class="tag-pill"><span class="dot dot-mint"></span> Mental Health</span>
+          <span class="tag-pill"><span class="dot dot-coral"></span> UX</span>
+        </div>
+      </div>
+
+      <!-- Input Fields -->
+      <div class="component-group">
+        <p class="component-group-title">Input Fields</p>
+        <div class="component-row" style="flex-direction:column;gap:16px;">
+          <div class="input-search">Search your brain...</div>
+          <div class="input-standard">Enter concept name...</div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="component-group">
+        <p class="component-group-title">Cards</p>
+        <div class="card-demo-row">
+          <div class="card-demo">
+            <div class="concept-card">
+              <div class="card-image grad-deep-blue"></div>
+              <div class="card-body">
+                <div class="card-title">Concept Card</div>
+                <div class="card-desc">A brief description of the concept goes here, one or two lines.</div>
+                <div class="card-tags">
+                  <span class="card-tag"><span class="dot dot-lavender"></span> Topic</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-demo">
+            <div class="add-card" style="min-height:0;height:100%;">
+              <span class="plus-icon">+</span>
+              <span class="add-text">Add a Node</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="component-group">
+        <p class="component-group-title">Navigation</p>
+        <div class="component-row" style="gap:48px;">
+          <div>
+            <p class="state-label">Nav Items</p>
+            <div class="nav-demo">
+              <div class="nav-item active" style="margin-bottom:2px;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                Active Item
+              </div>
+              <div class="nav-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/></svg>
+                Inactive Item
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="state-label">Section Label</p>
+            <div style="padding:16px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-structural);">Cortexes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      if (current === 'light') {
+        html.removeAttribute('data-theme');
+        toggle.innerHTML = '&#9728; Light';
+      } else {
+        html.setAttribute('data-theme', 'light');
+        toggle.innerHTML = '&#9790; Dark';
+      }
+    });
+  </script>
+</body>
+</html>

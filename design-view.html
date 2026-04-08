@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DESIGN.md — Cortex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 48px 64px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .file-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .file-icon {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      color: #D4A843;
+    }
+    .file-name {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      color: #fff;
+    }
+    .file-path {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 1px;
+      margin-left: auto;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: #aaa;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .h1 { color: #fff; font-size: 16px; font-weight: 600; display: block; margin-top: 16px; }
+    .h2 { color: #fff; font-size: 14px; font-weight: 600; display: block; margin-top: 14px; }
+    .h3 { color: #D4A843; font-size: 13px; font-weight: 500; display: block; margin-top: 12px; }
+    .gold { color: #D4A843; }
+    .key { color: #fff; }
+    .comment { color: #555; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="file-header">
+    <span class="file-icon">⁂</span>
+    <span class="file-name">DESIGN.md</span>
+    <span class="file-path">~/Development/humayunk/cortex/DESIGN.md</span>
+  </div>
+  <pre id="content">Loading...</pre>
+  <script>
+    fetch('DESIGN.md')
+      .then(r => r.text())
+      .then(text => {
+        const html = text
+          .replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))
+          .replace(/^# (.+)$/gm, '<span class="h1"># $1</span>')
+          .replace(/^## (.+)$/gm, '<span class="h2">## $1</span>')
+          .replace(/^### (.+)$/gm, '<span class="h3">### $1</span>')
+          .replace(/`([^`]+)`/g, '<span class="gold">$1</span>')
+          .replace(/\*\*([^*]+)\*\*/g, '<span class="key">$1</span>')
+          .replace(/^---$/gm, '<span class="comment">────────────────────────────</span>');
+        document.getElementById('content').innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById('content').textContent = 'Error: ' + err.message;
+      });
+  </script>
+</body>
+</html>
