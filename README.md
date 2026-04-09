@@ -12,7 +12,6 @@ A 5-minute demo deck for `/launch` — a Claude Code skill that takes a built-bu
 - `landing.html` — landing page for Cortex (built with /launch)
 - `icons/preview.html` — icon concept exploration
 - `SKILL.md` — the actual skill file
-- `DESIGN.md` — the design spec output of running /launch on Cortex
 
 ## The skill
 
