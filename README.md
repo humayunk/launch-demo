@@ -20,4 +20,4 @@ The full SKILL.md is in this repo. Want to try `/launch` on your own project? Co
 
 ## Built by
 
-Humayun Khan · [learnwithcortex.com](https://learnwithcortex.com)
+Humayun Khan · [@khanhumayun on LinkedIn](https://linkedin.com/in/khanhumayun)
